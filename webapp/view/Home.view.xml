@@ -15,16 +15,19 @@
     <HBox justifyContent="Center" alignItems="Center" class="customHBox">
 
       
-        <VBox class="marginFilter">
-            <Label text="{i18n>LabelFirstFilter}" />
-            <Input id="idOrNameInput" placeholder="ID or Name" width="300px" />
+        <VBox>
+            <Input id="idOrNameInput" placeholder="{i18n>LabelFirstFilter}" width="300px" />
         </VBox>
 
+                <VBox class="marginFilter">
+                    <Button icon="search" press="onInputSearch" />
+                </VBox>
+
                
-                 <VBox  class="marginFilter">
-                    <Label text="{i18n>LabelSecondFilter}" />
+                 <VBox>
                     <Select id="countrySelect">
                         <items>
+                        <c:Item text="{i18n>LabelSecondFilter}"/>
                             <c:Item key="Japan" text="Japan" />
                             <c:Item key="Spain" text="Spain" />
                             <c:Item key="Australia" text="Australia" />
@@ -46,7 +49,7 @@
 
               
                 <VBox>
-                    <Button text="Search" press="onSearch" />
+                    <Button icon="search" press="onCountrySearch" />
                 </VBox>
 
     </HBox>
