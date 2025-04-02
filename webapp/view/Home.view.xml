@@ -1,0 +1,38 @@
+<mvc:View controllerName="com.bootcamp.sapui5.finalproject.controller.Home"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page id="page" title="{i18n>title}">
+
+    <Button type="Default" press="onPress"></Button>
+
+
+<Table inset="false"
+        items="{
+            path: 'SuppliersCollection>/'
+        }">
+        <columns>
+            <Column>
+                <Text  text="{i18n>Supplier}" />
+            </Column>
+            <Column >
+                <Text  text="{i18n>SupplierID}" />
+            </Column>
+        </columns>
+        <items>
+            <ColumnListItem vAlign="Middle">
+                <cells>
+                    <ObjectIdentifier 
+                        title="{SuppliersCollection>ContactName}"
+                        />
+                    <ObjectIdentifier 
+                        title="{SuppliersCollection>SupplierID}"
+                        />
+                    
+                </cells>
+            </ColumnListItem>
+        </items>
+    </Table>
+
+    
+    </Page>
+</mvc:View>
