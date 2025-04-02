@@ -1,38 +1,92 @@
 <mvc:View controllerName="com.bootcamp.sapui5.finalproject.controller.Home"
     xmlns:mvc="sap.ui.core.mvc"
-    xmlns="sap.m">
-    <Page id="page" title="{i18n>title}">
+    xmlns="sap.m"
+    xmlns:c="sap.ui.core"
+    xmlns:table="sap.ui.table"
+    xmlns:fb="sap.ui.comp.filterbar">
 
-    <Button type="Default" press="onPress"></Button>
+    <Page showHeader="false"
+		enableScrolling="false">
+
+    <VBox justifyContent="Center" alignItems="Center" class="customVBox">
+
+    <Label text="Proveedores" class="customTitle" />
+
+    <HBox justifyContent="Center" alignItems="Center" class="customHBox">
+
+        <fb:FilterBar id="filterbar" persistencyKey="myPersKey" useToolbar="false" search=".onSearch" filterChange=".onFilterChange" afterVariantLoad=".onAfterVariantLoad">
+            <fb:filterGroupItems>
+			    <fb:FilterGroupItem name="Name" label="Name" groupName="Group1" visibleInFilterBar="true">
+					<fb:control>
+						<MultiComboBox
+							name="Name"
+							selectionChange=".onSelectionChange"
+							items="{
+								path: '/ProductNames',
+								templateShareable: true
+									}">
+							<c:Item key="{key}" text="{name}"/>
+						</MultiComboBox>
+					</fb:control>
+			</fb:FilterGroupItem>
+		    <fb:FilterGroupItem name="Category" label="Category" groupName="Group1" visibleInFilterBar="true">
+			    <fb:control>
+				    <MultiComboBox
+						name="Category"
+						selectionChange=".onSelectionChange"
+						items="{
+                            path: '/ProductCategories',
+						    templateShareable: true
+								}">
+							<c:Item key="{key}" text="{name}"/>
+					</MultiComboBox>
+				</fb:control>
+			</fb:FilterGroupItem>
+            <fb:FilterGroupItem name="SupplierName" label="SupplierName" groupName="Group1" visibleInFilterBar="true">
+				<fb:control>
+					<MultiComboBox
+						name="SupplierName"
+						selectionChange=".onSelectionChange"
+						items="{
+							path: '/ProductSuppliers',
+							templateShareable: true
+								}">					
+						<c:Item key="{key}" text="{name}"/>
+					</MultiComboBox>
+				</fb:control>
+			</fb:FilterGroupItem>
+			</fb:filterGroupItems>					
+        </fb:FilterBar>
 
 
-<Table inset="false"
-        items="{
-            path: 'SuppliersCollection>/'
-        }">
+        <!-- <Input width="400px" textAlign="Center" class="customInput" placeholder="{i18n>PlaceholderInput}"/> -->
+    </HBox>
+
+    <Table inset="false" 
+    items="{ path: 'SuppliersCollection>/' }" 
+    class="customTable">
+
         <columns>
+        <Column>
+                <Text text="{i18n>SupplierID}" />
+            </Column>
             <Column>
-                <Text  text="{i18n>Supplier}" />
+                <Text text="{i18n>Supplier}" />
             </Column>
-            <Column >
-                <Text  text="{i18n>SupplierID}" />
-            </Column>
+            
         </columns>
+
         <items>
             <ColumnListItem vAlign="Middle">
                 <cells>
-                    <ObjectIdentifier 
-                        title="{SuppliersCollection>ContactName}"
-                        />
-                    <ObjectIdentifier 
-                        title="{SuppliersCollection>SupplierID}"
-                        />
-                    
+                     <ObjectIdentifier title="{SuppliersCollection>SupplierID}" />
+                    <ObjectIdentifier title="{SuppliersCollection>ContactName}" />
                 </cells>
             </ColumnListItem>
         </items>
-    </Table>
 
-    
+    </Table>
+</VBox>
+   
     </Page>
 </mvc:View>

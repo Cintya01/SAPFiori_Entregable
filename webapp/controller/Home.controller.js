@@ -6,10 +6,11 @@ sap.ui.define([
 
     return Controller.extend("com.bootcamp.sapui5.finalproject.controller.Home", {
         onInit() {
+            this._loadData();
             
         },
 
-        onPress: async function() {
+        async _loadData() {
             try {
                 let oDatos = await HomeHelper.getDataSuppliers();
                 await HomeHelper.setSuppliersModel(this, oDatos[0].results);
