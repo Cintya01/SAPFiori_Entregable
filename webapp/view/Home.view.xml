@@ -10,56 +10,45 @@
 
     <VBox justifyContent="Center" alignItems="Center" class="customVBox">
 
-    <Label text="Proveedores" class="customTitle" />
+    <Label text="{i18n>title}" class="customTitle" />
 
     <HBox justifyContent="Center" alignItems="Center" class="customHBox">
 
-        <fb:FilterBar id="filterbar" persistencyKey="myPersKey" useToolbar="false" search=".onSearch" filterChange=".onFilterChange" afterVariantLoad=".onAfterVariantLoad">
-            <fb:filterGroupItems>
-			    <fb:FilterGroupItem name="Name" label="Name" groupName="Group1" visibleInFilterBar="true">
-					<fb:control>
-						<MultiComboBox
-							name="Name"
-							selectionChange=".onSelectionChange"
-							items="{
-								path: '/ProductNames',
-								templateShareable: true
-									}">
-							<c:Item key="{key}" text="{name}"/>
-						</MultiComboBox>
-					</fb:control>
-			</fb:FilterGroupItem>
-		    <fb:FilterGroupItem name="Category" label="Category" groupName="Group1" visibleInFilterBar="true">
-			    <fb:control>
-				    <MultiComboBox
-						name="Category"
-						selectionChange=".onSelectionChange"
-						items="{
-                            path: '/ProductCategories',
-						    templateShareable: true
-								}">
-							<c:Item key="{key}" text="{name}"/>
-					</MultiComboBox>
-				</fb:control>
-			</fb:FilterGroupItem>
-            <fb:FilterGroupItem name="SupplierName" label="SupplierName" groupName="Group1" visibleInFilterBar="true">
-				<fb:control>
-					<MultiComboBox
-						name="SupplierName"
-						selectionChange=".onSelectionChange"
-						items="{
-							path: '/ProductSuppliers',
-							templateShareable: true
-								}">					
-						<c:Item key="{key}" text="{name}"/>
-					</MultiComboBox>
-				</fb:control>
-			</fb:FilterGroupItem>
-			</fb:filterGroupItems>					
-        </fb:FilterBar>
+      
+        <VBox class="marginFilter">
+            <Label text="{i18n>LabelFirstFilter}" />
+            <Input id="idOrNameInput" placeholder="ID or Name" width="300px" />
+        </VBox>
 
+               
+                 <VBox  class="marginFilter">
+                    <Label text="{i18n>LabelSecondFilter}" />
+                    <Select id="countrySelect">
+                        <items>
+                            <c:Item key="Japan" text="Japan" />
+                            <c:Item key="Spain" text="Spain" />
+                            <c:Item key="Australia" text="Australia" />
+                            <c:Item key="Uk" text="UK" />
+                            <c:Item key="Sweden" text="Sweden" />
+                            <c:Item key="Brazil" text="Brazil" />
+                            <c:Item key="Germany" text="Germany" />
+                            <c:Item key="Italy" text="Italy" />
+                            <c:Item key="Norway" text="Norway" />
+                            <c:Item key="France" text="France" />
+                            <c:Item key="Singapore" text="Singapore" />
+                            <c:Item key="Denmark" text="Denmark" />
+                            <c:Item key="Netherlands" text="Netherlands" />
+                            <c:Item key="Finland" text="Finland" />
+                            <c:Item key="Canada" text="Canada" />
+                        </items>
+                    </Select>
+                </VBox>
 
-        <!-- <Input width="400px" textAlign="Center" class="customInput" placeholder="{i18n>PlaceholderInput}"/> -->
+              
+                <VBox>
+                    <Button text="Search" press="onSearch" />
+                </VBox>
+
     </HBox>
 
     <Table inset="false" 
@@ -73,6 +62,9 @@
             <Column>
                 <Text text="{i18n>Supplier}" />
             </Column>
+            <Column>
+                <Text text="{i18n>Country}" />
+            </Column>
             
         </columns>
 
@@ -81,6 +73,7 @@
                 <cells>
                      <ObjectIdentifier title="{SuppliersCollection>SupplierID}" />
                     <ObjectIdentifier title="{SuppliersCollection>ContactName}" />
+                    <ObjectIdentifier title="{SuppliersCollection>Country}" />
                 </cells>
             </ColumnListItem>
         </items>
