@@ -1,88 +1,82 @@
 <mvc:View controllerName="com.bootcamp.sapui5.finalproject.controller.Home"
     xmlns:mvc="sap.ui.core.mvc"
-    xmlns="sap.m"
+    xmlns:m="sap.m"
     xmlns:c="sap.ui.core"
-    xmlns:table="sap.ui.table"
+    xmlns="sap.ui.table"
     xmlns:fb="sap.ui.comp.filterbar">
 
-    <Page showHeader="false"
+    <m:Page showHeader="false"
 		enableScrolling="false">
 
-    <VBox justifyContent="Center" alignItems="Center" class="customVBox">
+    <m:VBox justifyContent="Center" alignItems="Center" class="customVBox">
+        <m:Label text="{i18n>title}" class="customTitle" />
+            <m:HBox justifyContent="Center" alignItems="Center" class="customHBox">
+                <m:VBox>  
+                    <m:Toolbar>
+                        <m:Input placeholder="{i18n>LabelFirstFilter}" change="onChange" value="{LocalDataModel>/valueInput}"/>    
+                   <m:ComboBox
+                        placeholder="{i18n>LabelSecondFilter}"
+                        selectionChange="onSelectionChange"
+                        selectedKey="{LocalDataModel>/selectedKey}"
+                        items="{ 
+                            path: '/Suppliers',
+                            sorter: { path: 'Country' }
+				        }">
+                        
+                        <c:Item key="{Country}" text="{Country}" />
+                    </m:ComboBox>
+           
+                        <m:Button
+                            id="btnBuscar"
+                            text="{i18n>btnSearch}"
+                            press="onPress"
+                        />            
+                    </m:Toolbar>
+                </m:VBox>
+            </m:HBox>
 
-    <Label text="{i18n>title}" class="customTitle" />
-
-    <HBox justifyContent="Center" alignItems="Center" class="customHBox">
-
-      
-        <VBox>
-            <Input id="idOrNameInput" placeholder="{i18n>LabelFirstFilter}" width="300px" />
-        </VBox>
-
-                <VBox class="marginFilter">
-                    <Button icon="search" press="onInputSearch" />
-                </VBox>
-
-               
-                 <VBox>
-                    <Select id="countrySelect">
-                        <items>
-                        <c:Item text="{i18n>LabelSecondFilter}"/>
-                            <c:Item key="Japan" text="Japan" />
-                            <c:Item key="Spain" text="Spain" />
-                            <c:Item key="Australia" text="Australia" />
-                            <c:Item key="Uk" text="UK" />
-                            <c:Item key="Sweden" text="Sweden" />
-                            <c:Item key="Brazil" text="Brazil" />
-                            <c:Item key="Germany" text="Germany" />
-                            <c:Item key="Italy" text="Italy" />
-                            <c:Item key="Norway" text="Norway" />
-                            <c:Item key="France" text="France" />
-                            <c:Item key="Singapore" text="Singapore" />
-                            <c:Item key="Denmark" text="Denmark" />
-                            <c:Item key="Netherlands" text="Netherlands" />
-                            <c:Item key="Finland" text="Finland" />
-                            <c:Item key="Canada" text="Canada" />
-                        </items>
-                    </Select>
-                </VBox>
-
-              
-                <VBox>
-                    <Button icon="search" press="onCountrySearch" />
-                </VBox>
-
-    </HBox>
-
-    <Table inset="false" 
-    items="{ path: 'SuppliersCollection>/' }" 
-    class="customTable">
-
-        <columns>
-        <Column>
-                <Text text="{i18n>SupplierID}" />
-            </Column>
-            <Column>
-                <Text text="{i18n>Supplier}" />
-            </Column>
-            <Column>
-                <Text text="{i18n>Country}" />
-            </Column>
-            
-        </columns>
-
-        <items>
-            <ColumnListItem vAlign="Middle">
-                <cells>
-                     <ObjectIdentifier title="{SuppliersCollection>SupplierID}" />
-                    <ObjectIdentifier title="{SuppliersCollection>ContactName}" />
-                    <ObjectIdentifier title="{SuppliersCollection>Country}" />
-                </cells>
-            </ColumnListItem>
-        </items>
-
-    </Table>
-</VBox>
+        <m:VBox justifyContent="Center" alignItems="Center" width="100%">
+            <m:HBox justifyContent="Center" width="100%">
+            <Table
+				rows="{SuppliersCollection>/}"
+				selectionMode="Single"
+				paste="onPaste"
+                alternateRowColors="true"
+				ariaLabelledBy="title"
+                width="80%"
+                class="customTable">
+							
+				<columns>
+					<Column width="25%">
+						<m:Label text="{i18n>SupplierID}" />
+                        <template>
+							<m:Text text="{SuppliersCollection>SupplierID}" wrapping="false" />
+                            </template>
+					</Column>
+                    <Column width="25%">
+						<m:Label text="{i18n>Supplier}" />
+                        <template>
+							<m:Text text="{SuppliersCollection>ContactName}" wrapping="false" />
+                            </template>
+					</Column>
+                    <Column width="25%">
+						<m:Label text="{i18n>CompanyName}" />
+                        <template>
+							<m:Text text="{SuppliersCollection>CompanyName}" wrapping="false" />
+                            </template>
+					</Column>
+	
+					<Column width="25%">
+						<m:Label text="Details" />
+                        <template>
+							<m:Button text="Show Details" press="handleDetailsPress"/>
+						</template>
+					</Column>					
+				</columns>
+			</Table>
+            </m:HBox>
+    </m:VBox>
+</m:VBox>
    
-    </Page>
+    </m:Page>
 </mvc:View>

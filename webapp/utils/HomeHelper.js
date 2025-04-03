@@ -1,65 +1,40 @@
 sap.ui.define([
     "com/bootcamp/sapui5/finalproject/utils/HomeService",
     "sap/ui/model/json/JSONModel",
-    "sap/ui/model/Filter",
-    "sap/ui/model/FilterOperator"
-    ], function (HomeService, JSONModel, Filter, FilterOperator){
+   
+    ], function (HomeService, JSONModel){
         "use strict";
     
         return {
             init: function (oNorthwindModel) {
                 this._oNorthwindModel = oNorthwindModel;
             },
+
+            setInitModelLocalData: function (oComponent) {
+                oComponent.setModel(new JSONModel({
+                    valueInput: '',
+                    selectedKey: ''
+                }), "LocalDataModel");
+            }, 
     
-            getDataSuppliers: async function() {
-               let oFilters = [];
+            getDataSuppliers: async function(oFilters) {
                 return HomeService.readSuppliers(this._oNorthwindModel, oFilters);
             },
 
 
-            onSearch: async function (controller) {
-                let aFilters = [];
-                let sIdOrName= controller.byId("idOrNameInput").getValue();
-                //filtro id o nombre
-                if(sIdOrName) {
-                    aFilters.push(new Filter({
-                        filters: [
-                            new Filter("SupplierID", FilterOperator.Contains, sIdOrName),
-                            new Filter("ContactName", FilterOperator.Contains, sIdOrName),
-                        ],
-    
-                    }));
-                }
-                //filtro dropdown pais
-                let sCountry = controller.byId("countrySelect").getSelectedKey();
-                if (sCountry) {
-                    aFilters.push(new Filter("Country", FilterOperator.Contains, sCountry))
-                }
-    
-                try{
-                    const aSuppliers = await HomeService.readSuppliers(this._oNorthwindModel, aFilters);
-                    this.setSuppliersModel(this, aSuppliers);
-                }catch{
-                    console.error("error en data filtro")
-                }
-             },
-    
-
-
-
-             setSuppliersModel: async function (controller, aDatos) {
-                let oListModel = controller.getView().getModel('SuppliersCollection');
+             setSuppliersModel: async function (oController, aDatos) {
+                let oListModel = oController.getOwnerComponent().getModel('SuppliersCollection');
                 if (!oListModel) {
                     const oModel = new JSONModel([]);
                     oModel.setSizeLimit(1000000);
-                    controller.getView().setModel(oModel, "SuppliersCollection");
-                    oListModel = controller.getView().getModel('SuppliersCollection');
+                    oController.getOwnerComponent().setModel(oModel, "SuppliersCollection");
+                    oListModel = oController.getOwnerComponent().getModel('SuppliersCollection');
                 }
 
              oListModel.setData(aDatos);
-         }, 
+            }, 
 
-         
+        
 
             
     
