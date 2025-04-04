@@ -1,0 +1,31 @@
+<c:FragmentDefinition 
+  xmlns="sap.m"
+  xmlns:f="sap.ui.layout.form"
+  xmlns:c="sap.ui.core">
+
+  <Dialog 
+  id="Dialog" 
+  title="Detalles del Producto">
+
+    <VBox>
+      <Text id="productName" text="{dialog>ProductName}" />
+      <Text id="productCategory" text="{dialog>CategoryID}" />
+      <Text id="productPrice" text="{dialog>UnitPrice}" />
+    </VBox>
+
+    <content>
+      <f:SimpleForm editable="true" layout="ResponsiveGridLayout">
+        <Label text="ID Material" />
+        <Input value="{dialog>MaterialID}" />
+
+        <Label text="Nombre Material" />
+        <Input value="{dialog>MaterialName}" />
+      </f:SimpleForm>
+    </content>
+
+    <buttons>
+      <Button text="Guardar" press="onSaveMaterial" />
+      <Button text="Cerrar" press="onCloseMaterialDialog" />
+    </buttons>
+  </Dialog>
+</c:FragmentDefinition>

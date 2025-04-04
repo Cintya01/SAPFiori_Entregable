@@ -1,16 +1,17 @@
 <mvc:View controllerName="com.bootcamp.sapui5.finalproject.controller.Detail"
     xmlns="sap.m"
 	xmlns:c="sap.ui.core"
-    xmlns:l="sap.ui.layout"
 	xmlns:f="sap.ui.layout.form"
 	xmlns:mvc="sap.ui.core.mvc"
-    xmlns:smartTable="sap.ui.comp.smarttable">
+    xmlns:smartTable="sap.ui.comp.smarttable"
+	xmlns:smartField="sap.ui.comp.smartfield"
+	>
     <Page>
 
     	<f:SimpleForm id="SimpleFormChange480_12120"
 			editable="true"
 			layout="ResponsiveGridLayout"
-			title="Address"
+			title="{i18n>headerSupplierPage}"
 			labelSpanXL="4"
 			labelSpanL="4"
 			labelSpanM="12"
@@ -52,25 +53,28 @@
 			</f:content>
 		</f:SimpleForm>
 
-		<smartTable:SmartTable 
-            entitySet="Products" 
-            smartFilterId="smartFilterBar"
-            tableBindingPath="Products"
-            initiallyVisibleFields="ProductID,ProductName,UnitPrice"
-			tableType="ResponsiveTable" 
-            enableExport="true" 
-            beforeExport="onBeforeExport"
-			useVariantManagement="true" 
-            useTablePersonalisation="true" 
-            header="Line Items"
-			showRowCount="true" 
-            persistencyKey="SmartTableAnalytical_Explored" 
-            enableAutoBinding="true"
-			demandPopin="true" 
-            class="sapUiResponsiveContentPadding" 
-            showDetailsButton="true" 
-            enableAutoColumnWidth="true" 
-            editTogglable="false"/>
+	 <Table id="productTable" items="{/Products}">
+            <columns>
+                <Column>
+                    <Text text="Product ID" />
+                </Column>
+                <Column>
+                    <Text text="Product Name" />
+                </Column>
+                <Column>
+                    <Text text="Unit Price" />
+                </Column>
+            </columns>
 
+            <items>
+                <ColumnListItem type="Active" press="onRowPress">
+                    <cells>
+                        <Text text="{ProductID}" />
+                        <Text text="{ProductName}" />
+                        <Text text="{UnitPrice}" />
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
     </Page>
 </mvc:View>
