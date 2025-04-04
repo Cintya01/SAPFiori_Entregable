@@ -1,8 +1,9 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/Filter",
-    "sap/ui/model/FilterOperator"
-], function (Controller, Filter, FilterOperator) {
+    "sap/ui/model/FilterOperator",
+    "sap/ui/model/json/JSONModel",
+], function (Controller, Filter, FilterOperator,JSONModel) {
     "use strict";
 
     return Controller.extend("com.bootcamp.sapui5.finalproject.controller.Detail", {
@@ -33,16 +34,27 @@ sap.ui.define([
             
         },
 
-        onRowPress: async function(oEvent){
-            let oSource = oEvent.getSource();
-            let aDatos = oSource.getBindingContext().getObject();
-
-            this.oDialog ??= await this.loadFragment({
-                name:"com.bootcamp.sapui5.finalproject.view.fragments.Dialog"
-            });
-            this.oDialog.open(aDatos);
+        onRowPress: async function (oEvent) {
+            const oSelectedData = oEvent.getSource().getBindingContext().getObject();
+            console.log("Data enviada al Dialog:", oSelectedData);
+        
+            const oDialogModel = new sap.ui.model.json.JSONModel(oSelectedData);
+        
+            if (!this.oDialog) {
+                this.oDialog = await this.loadFragment({
+                    name: "com.bootcamp.sapui5.finalproject.view.fragments.Dialog"
+                });
+        
+                this.getView().addDependent(this.oDialog);
+            }
+            this.oDialog.setModel(oDialogModel, "dialog");
+            console.log("Modelo asignado al diálogo:", this.oDialog.getModel("dialog").getData());
+        
+            this.oDialog.open();
         },
 
+        //Data Pasa pero no se lee en el dialog
+        
         onCloseMaterialDialog: function () {
             this.oDialog.close();
           }

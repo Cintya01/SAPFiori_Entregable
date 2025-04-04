@@ -5,7 +5,8 @@
 
   <Dialog 
   id="Dialog" 
-  title="Detalles del Producto">
+  title="{i18n>DialogTitle}"
+  >
 
     <VBox>
       <Text id="productName" text="{dialog>ProductName}" />
